@@ -30,37 +30,39 @@ public class GildedRose
                 continue;
             }
 
-            if (item.Name != "Aged Brie")
+            if (item.Name == "Aged Brie")
+            {
+                UpdateAgedBrie(item);
+                continue;
+            }
+
+            if (item.Quality > 0)
+            {
+                item.Quality = item.Quality - 1;
+            }
+
+            if (item.SellIn < 0)
             {
                 if (item.Quality > 0)
                 {
                     item.Quality = item.Quality - 1;
                 }
             }
-            else
-            {
-                if (item.Quality < 50)
-                {
-                    item.Quality = item.Quality + 1;
-                }
-            }
+        }
+    }
 
-            if (item.SellIn < 0)
+    private static void UpdateAgedBrie(Item item)
+    {
+        if (item.Quality < 50)
+        {
+            item.Quality = item.Quality + 1;
+        }
+
+        if (item.SellIn < 0)
+        {
+            if (item.Quality < 50)
             {
-                if (item.Name != "Aged Brie")
-                {
-                    if (item.Quality > 0)
-                    {
-                        item.Quality = item.Quality - 1;
-                    }
-                }
-                else
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-                }
+                item.Quality = item.Quality + 1;
             }
         }
     }
