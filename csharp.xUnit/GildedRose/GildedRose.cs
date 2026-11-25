@@ -45,15 +45,8 @@ public class GildedRose
     {
         if (item.Quality < 50)
         {
-            item.Quality = item.Quality + 1;
-        }
-
-        if (item.SellIn < 0)
-        {
-            if (item.Quality < 50)
-            {
-                item.Quality = item.Quality + 1;
-            }
+            var increase = item.SellIn < 0 ? 2 : 1;
+            item.Quality = Math.Min(50, item.Quality + increase);
         }
     }
 
