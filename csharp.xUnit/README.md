@@ -22,3 +22,20 @@ GildedRose/bin/Debug/net10.0/GildedRose 10
 ``` cmd
 dotnet test
 ```
+
+## Inventory characterization tests
+
+The starter suite had two failures: `GildedRoseTest.foo` expected the placeholder
+name `fixme` instead of `foo`, and `ApprovalTest.Foo` had no verified file.
+`ApprovalTest.ThirtyDays` passed against the existing snapshot.
+
+Run the suite with coverage from this directory using the .NET 10 SDK:
+
+``` cmd
+dotnet test GildedRose.sln --collect:"XPlat Code Coverage"
+```
+
+In `GildedRoseTests/TestResults/**/coverage.cobertura.xml`, check the
+`UpdateQuality` method entry. The characterization suite passes all 20 cases,
+including the 30-day approval, and covers 67/67 executable lines and 36/36
+branches in the updater.
