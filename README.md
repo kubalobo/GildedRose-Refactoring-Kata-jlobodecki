@@ -1,6 +1,6 @@
 # Gilded Rose: an AI coding workflow
 
-This fork uses the Gilded Rose kata to show how coding agents take a GitHub issue through implementation and pull request review. Orca manages the worktrees where agents work on separate branches. We used OMP with two models: GPT-6.1 Astra and Sol.
+This fork uses the Gilded Rose kata to show how coding agents take a GitHub issue through implementation and pull request review. Orca manages the worktrees where agents work on separate branches. I used OMP with two models: GPT-6.1 Astra and Sol.
 
 ## From issue to reviewed pull request
 
