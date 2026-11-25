@@ -1,11 +1,11 @@
 # Gilded Rose: an AI coding workflow
 
-This fork uses the Gilded Rose kata to show how coding agents take a GitHub issue through implementation and pull request review. Orca manages the worktrees where agents work on separate branches. I used OMP with two models: GPT-6.1 Astra and Sol.
+This fork uses the Gilded Rose kata to show how coding agents take a GitHub issue through implementation and pull request review. I used Orca to manage separate worktrees and [Oh My Pi (OMP)](https://github.com/can1357/oh-my-pi) as the coding agent harness. OMP gave the two models I used, GPT-6.1 Astra and Sol, tools to read and edit files and run tests in each worktree.
 
 ## From issue to reviewed pull request
 
 1. **Define the change in an issue.** Settle ambiguous requirements and give the agent observable acceptance criteria. [Issue #10](https://github.com/kubalobo/GildedRose-Refactoring-Kata-jlobodecki/issues/10), for example, specifies exactly which item names count as Conjured and which lines of the existing snapshot may change.
-2. **Give the issue to a coding agent.** In an Orca worktree, OMP uses the issue and the [repository instructions](AGENTS.md) to guide its edits and local checks. The resulting [pull request #12](https://github.com/kubalobo/GildedRose-Refactoring-Kata-jlobodecki/pull/12) links back to the issue so a reviewer can compare the patch with the original request.
+2. **Give the issue to a coding agent.** In an Orca worktree, the agent uses the issue and the [repository instructions](AGENTS.md) to guide its edits and local checks. The resulting [pull request #12](https://github.com/kubalobo/GildedRose-Refactoring-Kata-jlobodecki/pull/12) links back to the issue so a reviewer can compare the patch with the original request.
 3. **Check the automated test results.** On pull requests and pushes to `main`, [GitHub Actions CI](.github/workflows/dotnet-tests.yml) runs the xUnit suite and requires 100% line and branch coverage for the inventory updater.
 4. **Read the automated code review.** Separately from CI, `orca-bots` reviews the diff and posts its findings on the pull request. See [the bot’s review of PR #12](https://github.com/kubalobo/GildedRose-Refactoring-Kata-jlobodecki/pull/12#issuecomment-7176170461).
 
