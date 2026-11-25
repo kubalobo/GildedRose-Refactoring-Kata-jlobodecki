@@ -36,18 +36,7 @@ public class GildedRose
                 continue;
             }
 
-            if (item.Quality > 0)
-            {
-                item.Quality = item.Quality - 1;
-            }
-
-            if (item.SellIn < 0)
-            {
-                if (item.Quality > 0)
-                {
-                    item.Quality = item.Quality - 1;
-                }
-            }
+            UpdateOrdinaryItem(item);
         }
     }
 
@@ -93,6 +82,22 @@ public class GildedRose
         if (item.SellIn < 0)
         {
             item.Quality = item.Quality - item.Quality;
+        }
+    }
+
+    private static void UpdateOrdinaryItem(Item item)
+    {
+        if (item.Quality > 0)
+        {
+            item.Quality = item.Quality - 1;
+        }
+
+        if (item.SellIn < 0)
+        {
+            if (item.Quality > 0)
+            {
+                item.Quality = item.Quality - 1;
+            }
         }
     }
 }
