@@ -15,6 +15,13 @@ class GildedRoseTest(unittest.TestCase):
         shop.update_quality()
         self.assertEqual((-1, 7), (item.sell_in, item.quality))
 
+    def test_expired_normal_item_with_one_quality_stops_at_zero(self):
+        item = Item("Elixir of the Mongoose", sell_in=-1, quality=1)
+
+        GildedRose([item]).update_quality()
+
+        self.assertEqual((-2, 0), (item.sell_in, item.quality))
+
     def test_foo(self):
         items = [Item("foo", 0, 0)]
         gilded_rose = GildedRose(items)
