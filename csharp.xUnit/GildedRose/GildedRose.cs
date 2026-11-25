@@ -52,30 +52,16 @@ public class GildedRose
 
     private static void UpdateBackstagePass(Item item, int sellInBeforeUpdate)
     {
-        if (item.Quality < 50)
-        {
-            item.Quality = item.Quality + 1;
-
-            if (sellInBeforeUpdate < 11)
-            {
-                if (item.Quality < 50)
-                {
-                    item.Quality = item.Quality + 1;
-                }
-            }
-
-            if (sellInBeforeUpdate < 6)
-            {
-                if (item.Quality < 50)
-                {
-                    item.Quality = item.Quality + 1;
-                }
-            }
-        }
-
         if (item.SellIn < 0)
         {
-            item.Quality = item.Quality - item.Quality;
+            item.Quality = 0;
+            return;
+        }
+
+        if (item.Quality < 50)
+        {
+            var increase = sellInBeforeUpdate <= 5 ? 3 : sellInBeforeUpdate <= 10 ? 2 : 1;
+            item.Quality = Math.Min(50, item.Quality + increase);
         }
     }
 
