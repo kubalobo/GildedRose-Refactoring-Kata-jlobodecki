@@ -13,7 +13,13 @@ Read the [Gilded Rose requirements](GildedRoseRequirements.md) and start in [`cs
 dotnet test csharp.xUnit/GildedRose.sln
 ```
 
-The starter includes a deliberately failing `foo` unit test and a `Foo` approval example with no verified file. The `ThirtyDays` approval test has a checked-in baseline. Refactor in small steps and keep that baseline unchanged when preserving behavior.
+## Tooling and approach
+
+The xUnit tests cover individual inventory rules, including what happens on the sell-by date and at zero quality. `ApprovalTest.ThirtyDays` uses Verify.Xunit to compare 30 days of inventory output with a [checked-in snapshot](csharp.xUnit/GildedRoseTests/ApprovalTest.ThirtyDays.verified.txt).
+
+The refactor kept that snapshot unchanged while moving the daily rules into item-specific methods. `UpdateQuality` still updates each existing `Item` in place. The Conjured rule came in a separate change: focused tests cover the faster quality loss, and only the affected Conjured output changed in the snapshot.
+
+GitHub Actions runs the suite and collects coverage with Coverlet. A Python check requires 100% line and branch coverage for the updater, including its private helpers. See the [local coverage command](csharp.xUnit/README.md#inventory-characterization-tests) to reproduce the CI check.
 
 ## History of the exercise
 
