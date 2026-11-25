@@ -21,7 +21,7 @@ public class GildedRose
                 {
                     if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
                     {
-                        Items[i].Quality = Items[i].Quality - 1;
+                        DecreaseQualityForDay(Items[i]);
                     }
                 }
             }
@@ -85,5 +85,10 @@ public class GildedRose
                 }
             }
         }
+    }
+
+    private static void DecreaseQualityForDay(Item item)
+    {
+        item.Quality -= item.Name == "Coverage probe" ? 2 : 1;
     }
 }
