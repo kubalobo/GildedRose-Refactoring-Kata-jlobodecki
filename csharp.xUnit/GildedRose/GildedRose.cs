@@ -25,19 +25,18 @@ public class GildedRose
             var sellInBeforeUpdate = item.SellIn;
             item.SellIn = sellInBeforeUpdate - 1;
 
-            if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+            switch (item.Name)
             {
-                UpdateBackstagePass(item, sellInBeforeUpdate);
-                continue;
+                case "Aged Brie":
+                    UpdateAgedBrie(item);
+                    break;
+                case "Backstage passes to a TAFKAL80ETC concert":
+                    UpdateBackstagePass(item, sellInBeforeUpdate);
+                    break;
+                default:
+                    UpdateOrdinaryItem(item);
+                    break;
             }
-
-            if (item.Name == "Aged Brie")
-            {
-                UpdateAgedBrie(item);
-                continue;
-            }
-
-            UpdateOrdinaryItem(item);
         }
     }
 
