@@ -35,6 +35,7 @@ Run the suite with coverage from this directory using the .NET 10 SDK:
 dotnet test GildedRose.sln --collect:"XPlat Code Coverage"
 ```
 
-In `TestResults/**/coverage.cobertura.xml`, check the `UpdateQuality` method
-entry. The characterization suite passes all 20 cases, including the 30-day
-approval, and covers 67/67 executable lines and 36/36 branches in the updater.
+In `GildedRoseTests/TestResults/**/coverage.cobertura.xml`, check the
+`UpdateQuality` method entry. The characterization suite passes all 20 cases,
+including the 30-day approval, and covers 67/67 executable lines and 36/36
+branches in the updater.
