@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿﻿using System;
+using System.Collections.Generic;
 
 namespace GildedRoseKata;
 
@@ -89,15 +90,8 @@ public class GildedRose
     {
         if (item.Quality > 0)
         {
-            item.Quality = item.Quality - 1;
-        }
-
-        if (item.SellIn < 0)
-        {
-            if (item.Quality > 0)
-            {
-                item.Quality = item.Quality - 1;
-            }
+            var decrease = item.SellIn < 0 ? 2 : 1;
+            item.Quality = Math.Max(0, item.Quality - decrease);
         }
     }
 }
