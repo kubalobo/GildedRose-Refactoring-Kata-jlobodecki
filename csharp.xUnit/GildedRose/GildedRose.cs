@@ -16,14 +16,16 @@ public class GildedRose
         for (var i = 0; i < Items.Count; i++)
         {
             var item = Items[i];
+            if (item.Name == "Sulfuras, Hand of Ragnaros")
+            {
+                continue;
+            }
+
             if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
             {
                 if (item.Quality > 0)
                 {
-                    if (item.Name != "Sulfuras, Hand of Ragnaros")
-                    {
-                        item.Quality = item.Quality - 1;
-                    }
+                    item.Quality = item.Quality - 1;
                 }
             }
             else
@@ -53,10 +55,7 @@ public class GildedRose
                 }
             }
 
-            if (item.Name != "Sulfuras, Hand of Ragnaros")
-            {
-                item.SellIn = item.SellIn - 1;
-            }
+            item.SellIn = item.SellIn - 1;
 
             if (item.SellIn < 0)
             {
@@ -66,10 +65,7 @@ public class GildedRose
                     {
                         if (item.Quality > 0)
                         {
-                            if (item.Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                item.Quality = item.Quality - 1;
-                            }
+                            item.Quality = item.Quality - 1;
                         }
                     }
                     else
