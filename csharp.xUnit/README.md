@@ -30,8 +30,11 @@ name `fixme` instead of `foo`, and `ApprovalTest.Foo` had no verified file.
 `ApprovalTest.ThirtyDays` passed against the existing snapshot.
 
 Backstage bonuses use `SellIn` before the daily decrement; expiry uses the
-decremented value. `Conjured Mana Cake` still follows the ordinary-item rule
-in the approved output.
+decremented value.
+
+An item is Conjured if its name starts with the exact, case-sensitive prefix
+`Conjured ` (including the trailing space). It loses 2 quality per day when
+`SellIn` starts above zero and 4 otherwise, never dropping below zero.
 
 GitHub Actions runs the full suite on pull requests and pushes to `main`.
 It requires 100% line and branch coverage for the `GildedRose` class, including

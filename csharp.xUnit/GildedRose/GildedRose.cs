@@ -34,7 +34,7 @@ public class GildedRose
                     UpdateBackstagePass(item, sellInBeforeUpdate);
                     break;
                 default:
-                    UpdateOrdinaryItem(item);
+                    UpdateDegradingItem(item, sellInBeforeUpdate);
                     break;
             }
         }
@@ -64,11 +64,16 @@ public class GildedRose
         }
     }
 
-    private static void UpdateOrdinaryItem(Item item)
+    private static void UpdateDegradingItem(Item item, int sellInBeforeUpdate)
     {
         if (item.Quality > 0)
         {
-            var decrease = item.SellIn < 0 ? 2 : 1;
+            var decrease = sellInBeforeUpdate > 0 ? 1 : 2;
+            if (item.Name is string name && name.StartsWith("Conjured ", StringComparison.Ordinal))
+            {
+                decrease *= 2;
+            }
+
             item.Quality = Math.Max(0, item.Quality - decrease);
         }
     }

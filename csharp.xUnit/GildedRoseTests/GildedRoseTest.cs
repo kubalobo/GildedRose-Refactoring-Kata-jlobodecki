@@ -23,6 +23,28 @@ public class GildedRoseTest
     }
 
     [Theory]
+    [InlineData("Conjured Mana Cake", 1, 10, 0, 8)]
+    [InlineData("Conjured Mana Cake", 0, 10, -1, 6)]
+    [InlineData("Conjured Elixir", -1, 10, -2, 6)]
+    [InlineData("Conjured Elixir", 1, 1, 0, 0)]
+    [InlineData("Conjured Elixir", 0, 3, -1, 0)]
+    public void ConjuredItemsDegradeTwiceAsFastWithoutGoingBelowZero(
+        string name, int sellIn, int quality, int expectedSellIn, int expectedQuality)
+    {
+        UpdateAndAssert(name, sellIn, quality, expectedSellIn, expectedQuality);
+    }
+
+    [Theory]
+    [InlineData("ConjuredMana Cake")]
+    [InlineData("conjured Mana Cake")]
+    [InlineData("Mana Cake (Conjured Edition)")]
+    [InlineData(null)]
+    public void NamesWithoutTheExactConjuredPrefixDegradeNormally(string name)
+    {
+        UpdateAndAssert(name, 0, 10, -1, 8);
+    }
+
+    [Theory]
     [InlineData(1, 48, 0, 49)]
     [InlineData(0, 48, -1, 50)]
     [InlineData(0, 49, -1, 50)]
