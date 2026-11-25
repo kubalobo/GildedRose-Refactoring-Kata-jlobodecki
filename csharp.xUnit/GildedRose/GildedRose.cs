@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿﻿using System;
+using System.Collections.Generic;
 
 namespace GildedRoseKata;
 
@@ -15,75 +16,60 @@ public class GildedRose
     {
         for (var i = 0; i < Items.Count; i++)
         {
-            if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+            var item = Items[i];
+            if (item.Name == "Sulfuras, Hand of Ragnaros")
             {
-                if (Items[i].Quality > 0)
-                {
-                    if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                    {
-                        Items[i].Quality = Items[i].Quality - 1;
-                    }
-                }
-            }
-            else
-            {
-                if (Items[i].Quality < 50)
-                {
-                    Items[i].Quality = Items[i].Quality + 1;
-
-                    if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (Items[i].SellIn < 11)
-                        {
-                            if (Items[i].Quality < 50)
-                            {
-                                Items[i].Quality = Items[i].Quality + 1;
-                            }
-                        }
-
-                        if (Items[i].SellIn < 6)
-                        {
-                            if (Items[i].Quality < 50)
-                            {
-                                Items[i].Quality = Items[i].Quality + 1;
-                            }
-                        }
-                    }
-                }
+                continue;
             }
 
-            if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-            {
-                Items[i].SellIn = Items[i].SellIn - 1;
-            }
+            var sellInBeforeUpdate = item.SellIn;
+            item.SellIn = sellInBeforeUpdate - 1;
 
-            if (Items[i].SellIn < 0)
+            switch (item.Name)
             {
-                if (Items[i].Name != "Aged Brie")
-                {
-                    if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (Items[i].Quality > 0)
-                        {
-                            if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                Items[i].Quality = Items[i].Quality - 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Items[i].Quality = Items[i].Quality - Items[i].Quality;
-                    }
-                }
-                else
-                {
-                    if (Items[i].Quality < 50)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-                    }
-                }
+                case "Aged Brie":
+                    UpdateAgedBrie(item);
+                    break;
+                case "Backstage passes to a TAFKAL80ETC concert":
+                    UpdateBackstagePass(item, sellInBeforeUpdate);
+                    break;
+                default:
+                    UpdateOrdinaryItem(item);
+                    break;
             }
+        }
+    }
+
+    private static void UpdateAgedBrie(Item item)
+    {
+        if (item.Quality < 50)
+        {
+            var increase = item.SellIn < 0 ? 2 : 1;
+            item.Quality = Math.Min(50, item.Quality + increase);
+        }
+    }
+
+    private static void UpdateBackstagePass(Item item, int sellInBeforeUpdate)
+    {
+        if (item.SellIn < 0)
+        {
+            item.Quality = 0;
+            return;
+        }
+
+        if (item.Quality < 50)
+        {
+            var increase = sellInBeforeUpdate <= 5 ? 3 : sellInBeforeUpdate <= 10 ? 2 : 1;
+            item.Quality = Math.Min(50, item.Quality + increase);
+        }
+    }
+
+    private static void UpdateOrdinaryItem(Item item)
+    {
+        if (item.Quality > 0)
+        {
+            var decrease = item.SellIn < 0 ? 2 : 1;
+            item.Quality = Math.Max(0, item.Quality - decrease);
         }
     }
 }

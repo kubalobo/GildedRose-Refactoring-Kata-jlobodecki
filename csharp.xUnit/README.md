@@ -29,6 +29,10 @@ The starter suite had two failures: `GildedRoseTest.foo` expected the placeholde
 name `fixme` instead of `foo`, and `ApprovalTest.Foo` had no verified file.
 `ApprovalTest.ThirtyDays` passed against the existing snapshot.
 
+Backstage bonuses use `SellIn` before the daily decrement; expiry uses the
+decremented value. `Conjured Mana Cake` still follows the ordinary-item rule
+in the approved output.
+
 GitHub Actions runs the full suite on pull requests and pushes to `main`.
 It requires 100% line and branch coverage for the `GildedRose` class, including
 private updater helpers, and uploads `coverage.cobertura.xml` as the
