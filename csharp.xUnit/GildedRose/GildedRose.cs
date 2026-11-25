@@ -24,7 +24,13 @@ public class GildedRose
             var sellInBeforeUpdate = item.SellIn;
             item.SellIn = sellInBeforeUpdate - 1;
 
-            if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
+            if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+            {
+                UpdateBackstagePass(item, sellInBeforeUpdate);
+                continue;
+            }
+
+            if (item.Name != "Aged Brie")
             {
                 if (item.Quality > 0)
                 {
@@ -36,25 +42,6 @@ public class GildedRose
                 if (item.Quality < 50)
                 {
                     item.Quality = item.Quality + 1;
-
-                    if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (sellInBeforeUpdate < 11)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
-
-                        if (sellInBeforeUpdate < 6)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
-                    }
                 }
             }
 
@@ -62,16 +49,9 @@ public class GildedRose
             {
                 if (item.Name != "Aged Brie")
                 {
-                    if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
+                    if (item.Quality > 0)
                     {
-                        if (item.Quality > 0)
-                        {
-                            item.Quality = item.Quality - 1;
-                        }
-                    }
-                    else
-                    {
-                        item.Quality = item.Quality - item.Quality;
+                        item.Quality = item.Quality - 1;
                     }
                 }
                 else
@@ -82,6 +62,35 @@ public class GildedRose
                     }
                 }
             }
+        }
+    }
+
+    private static void UpdateBackstagePass(Item item, int sellInBeforeUpdate)
+    {
+        if (item.Quality < 50)
+        {
+            item.Quality = item.Quality + 1;
+
+            if (sellInBeforeUpdate < 11)
+            {
+                if (item.Quality < 50)
+                {
+                    item.Quality = item.Quality + 1;
+                }
+            }
+
+            if (sellInBeforeUpdate < 6)
+            {
+                if (item.Quality < 50)
+                {
+                    item.Quality = item.Quality + 1;
+                }
+            }
+        }
+
+        if (item.SellIn < 0)
+        {
+            item.Quality = item.Quality - item.Quality;
         }
     }
 }
