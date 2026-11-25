@@ -1,0 +1,36 @@
+name: .NET tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: xUnit and updater coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+      - name: Run xUnit with updater coverage
+        run: >-
+          dotnet test csharp.xUnit/GildedRose.sln
+          --collect:"XPlat Code Coverage"
+          --settings csharp.xUnit/updater-coverage.runsettings
+          --results-directory TestResults
+      - name: Require 100% updater line and branch coverage
+        run: python3 csharp.xUnit/check-updater-coverage.py TestResults/*/coverage.cobertura.xml
+      - name: Upload updater coverage report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: updater-coverage
+          path: TestResults/*/coverage.cobertura.xml
+          if-no-files-found: error
