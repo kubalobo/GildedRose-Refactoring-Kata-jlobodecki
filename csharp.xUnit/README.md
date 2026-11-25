@@ -29,13 +29,16 @@ The starter suite had two failures: `GildedRoseTest.foo` expected the placeholde
 name `fixme` instead of `foo`, and `ApprovalTest.Foo` had no verified file.
 `ApprovalTest.ThirtyDays` passed against the existing snapshot.
 
-Run the suite with coverage from this directory using the .NET 10 SDK:
+GitHub Actions runs the full suite on pull requests and pushes to `main`.
+It requires 100% line and branch coverage for the `GildedRose` class, including
+private updater helpers, and uploads `coverage.cobertura.xml` as the
+`updater-coverage` artifact even if the coverage check fails.
 
-``` cmd
-dotnet test GildedRose.sln --collect:"XPlat Code Coverage"
+To run the same check from the repository root with the .NET 10 SDK and Python 3:
+
+```sh
+results=$(mktemp -d)
+dotnet test csharp.xUnit/GildedRose.sln --collect:"XPlat Code Coverage" \
+  --settings csharp.xUnit/updater-coverage.runsettings --results-directory "$results" &&
+  python3 csharp.xUnit/check-updater-coverage.py "$results"/*/coverage.cobertura.xml
 ```
-
-In `GildedRoseTests/TestResults/**/coverage.cobertura.xml`, check the
-`UpdateQuality` method entry. The characterization suite passes all 20 cases,
-including the 30-day approval, and covers 67/67 executable lines and 36/36
-branches in the updater.
